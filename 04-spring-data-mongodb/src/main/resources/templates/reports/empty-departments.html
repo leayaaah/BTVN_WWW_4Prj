@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Phòng ban chưa có nhân viên')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 720px;">
+    <h3>Danh sách phòng ban chưa có nhân viên nào</h3>
+    <div class="alert alert-info" th:if="${#lists.isEmpty(emptyDepartments)}">
+        Tất cả phòng ban hiện đều có nhân viên.
+    </div>
+    <table class="table table-striped" th:unless="${#lists.isEmpty(emptyDepartments)}">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Phòng ban</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="d : ${emptyDepartments}">
+            <td th:text="${d.id}">1</td>
+            <td th:text="${d.name}">Phòng ban</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

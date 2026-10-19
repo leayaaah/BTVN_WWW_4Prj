@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${title})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container-fluid px-4">
+    <h3 th:text="${title}">Báo cáo</h3>
+
+    <form th:action="@{${action}}" method="get" class="row g-2 align-items-end mb-4">
+        <div class="col-auto" th:if="${showDepartment}">
+            <label class="form-label">Phòng ban</label>
+            <select name="departmentId" class="form-select">
+                <option value="">-- Chọn phòng ban --</option>
+                <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"
+                        th:selected="${departmentId != null and departmentId == d.id}">Phòng ban</option>
+            </select>
+        </div>
+        <div class="col-auto" th:if="${showPosition}">
+            <label class="form-label">Chức vụ</label>
+            <select name="positionId" class="form-select">
+                <option value="">-- Chọn chức vụ --</option>
+                <option th:each="p : ${positions}" th:value="${p.id}" th:text="${p.title}"
+                        th:selected="${positionId != null and positionId == p.id}">Chức vụ</option>
+            </select>
+        </div>
+        <div class="col-auto" th:if="${showN}">
+            <label class="form-label">Số lượng (N)</label>
+            <input type="number" name="n" min="1" max="100" class="form-control" th:value="${n}" style="width: 100px;">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Xem</button>
+        </div>
+    </form>
+
+    <div th:if="${employees != null}">
+        <h5>Kết quả: <span class="badge bg-primary" th:text="${#lists.size(employees)}">0</span> nhân viên</h5>
+        <div class="alert alert-warning" th:if="${#lists.isEmpty(employees)}">Không có nhân viên nào.</div>
+        <div th:unless="${#lists.isEmpty(employees)}">
+            <div th:replace="~{fragments/layout :: employeeTable(${employees})}"></div>
+        </div>
+    </div>
+    <div class="text-muted" th:if="${employees == null}">Hãy chọn điều kiện rồi bấm "Xem".</div>
+</div>
+</body>
+</html>

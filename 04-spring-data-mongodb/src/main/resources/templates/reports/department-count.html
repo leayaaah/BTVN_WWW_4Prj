@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Số nhân viên mỗi phòng ban')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 720px;">
+    <h3>Thống kê số nhân viên của mỗi phòng ban</h3>
+    <table class="table table-striped">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Phòng ban</th><th class="text-end">Số nhân viên</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${stats}">
+            <td th:text="${s.departmentId}">1</td>
+            <td th:text="${s.departmentName}">Phòng ban</td>
+            <td class="text-end" th:text="${s.employeeCount}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

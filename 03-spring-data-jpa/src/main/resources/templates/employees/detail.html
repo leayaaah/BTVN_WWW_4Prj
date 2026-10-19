@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Chi tiết nhân viên')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 720px;">
+    <h3>Chi tiết nhân viên #<span th:text="${employee.id}">1</span></h3>
+    <dl class="row">
+        <dt class="col-sm-3">Họ tên</dt>
+        <dd class="col-sm-9" th:text="${employee.name}"></dd>
+        <dt class="col-sm-3">Vai trò</dt>
+        <dd class="col-sm-9" th:text="${employee.role}"></dd>
+        <dt class="col-sm-3">Tuổi</dt>
+        <dd class="col-sm-9" th:text="${employee.age}"></dd>
+        <dt class="col-sm-3">Lương</dt>
+        <dd class="col-sm-9" th:text="${#numbers.formatDecimal(employee.salary, 0, 'POINT', 0, 'COMMA')} + ' VND'"></dd>
+        <dt class="col-sm-3">Phòng ban</dt>
+        <dd class="col-sm-9" th:text="${employee.departmentName}"></dd>
+        <dt class="col-sm-3">Chức vụ</dt>
+        <dd class="col-sm-9" th:text="${employee.positionTitle}"></dd>
+    </dl>
+    <a class="btn btn-primary" th:href="@{/employees/{id}/edit(id=${employee.id})}">Sửa</a>
+    <a class="btn btn-outline-secondary" th:href="@{/employees}">Quay lại danh sách</a>
+</div>
+</body>
+</html>

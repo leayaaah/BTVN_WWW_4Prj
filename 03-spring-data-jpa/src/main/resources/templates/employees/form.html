@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nhân viên')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 720px;">
+    <h3 th:text="${employeeForm.id == null} ? 'Thêm nhân viên' : 'Sửa nhân viên #' + ${employeeForm.id}">Nhân viên</h3>
+
+    <form th:object="${employeeForm}"
+          th:action="${employeeForm.id == null} ? @{/employees} : @{/employees/{id}(id=${employeeForm.id})}"
+          method="post" class="row g-3">
+
+        <div class="col-12">
+            <label class="form-label">Họ tên *</label>
+            <input type="text" class="form-control" th:field="*{name}"
+                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{name}"></div>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Vai trò</label>
+            <input type="text" class="form-control" th:field="*{role}">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Tuổi *</label>
+            <input type="number" class="form-control" th:field="*{age}"
+                   th:classappend="${#fields.hasErrors('age')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{age}"></div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Lương (VND) *</label>
+            <input type="number" class="form-control" th:field="*{salary}"
+                   th:classappend="${#fields.hasErrors('salary')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{salary}"></div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Phòng ban *</label>
+            <select class="form-select" th:field="*{departmentId}"
+                    th:classappend="${#fields.hasErrors('departmentId')} ? 'is-invalid'">
+                <option value="">-- Chọn phòng ban --</option>
+                <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}">Phòng ban</option>
+            </select>
+            <div class="invalid-feedback" th:errors="*{departmentId}"></div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Chức vụ *</label>
+            <select class="form-select" th:field="*{positionId}"
+                    th:classappend="${#fields.hasErrors('positionId')} ? 'is-invalid'">
+                <option value="">-- Chọn chức vụ --</option>
+                <option th:each="p : ${positions}" th:value="${p.id}" th:text="${p.title}">Chức vụ</option>
+            </select>
+            <div class="invalid-feedback" th:errors="*{positionId}"></div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a class="btn btn-outline-secondary" th:href="@{/employees}">Hủy</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

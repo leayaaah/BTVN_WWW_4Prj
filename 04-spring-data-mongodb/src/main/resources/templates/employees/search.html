@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Tìm kiếm nhân viên')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container-fluid px-4">
+    <h3>Tìm kiếm nhân viên</h3>
+    <p class="text-muted">Có thể kết hợp nhiều điều kiện. Để trống ô nào thì không lọc theo ô đó.</p>
+
+    <form th:action="@{/employees/search}" th:object="${criteria}" method="get" class="row g-3 mb-4">
+        <div class="col-md-2">
+            <label class="form-label">ID</label>
+            <input type="number" class="form-control" th:field="*{id}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Họ tên (chứa)</label>
+            <input type="text" class="form-control" th:field="*{name}">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Tuổi từ</label>
+            <input type="number" class="form-control" th:field="*{minAge}">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Tuổi đến</label>
+            <input type="number" class="form-control" th:field="*{maxAge}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Lương lớn hơn (VND)</label>
+            <input type="number" class="form-control" th:field="*{minSalary}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Chức vụ</label>
+            <select class="form-select" th:field="*{positionId}">
+                <option value="">-- Tất cả --</option>
+                <option th:each="p : ${positions}" th:value="${p.id}" th:text="${p.title}">Chức vụ</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            <a class="btn btn-outline-secondary" th:href="@{/employees/search}">Xóa điều kiện</a>
+        </div>
+    </form>
+
+    <div th:if="${employees != null}">
+        <h5>Kết quả: <span class="badge bg-primary" th:text="${#lists.size(employees)}">0</span> nhân viên</h5>
+        <div class="alert alert-warning" th:if="${#lists.isEmpty(employees)}">Không tìm thấy nhân viên phù hợp.</div>
+        <div th:unless="${#lists.isEmpty(employees)}">
+            <div th:replace="~{fragments/layout :: employeeTable(${employees})}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

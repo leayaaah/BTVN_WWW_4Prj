@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Lương theo phòng ban')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 820px;">
+    <h3>Lương trung bình và tổng lương theo phòng ban</h3>
+    <table class="table table-striped">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Phòng ban</th><th class="text-end">Lương trung bình (VND)</th><th class="text-end">Tổng lương (VND)</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${stats}">
+            <td th:text="${s.departmentId}">1</td>
+            <td th:text="${s.departmentName}">Phòng ban</td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(s.avgSalary, 0, 'POINT', 0, 'COMMA')}">0</td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(s.totalSalary, 0, 'POINT', 0, 'COMMA')}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

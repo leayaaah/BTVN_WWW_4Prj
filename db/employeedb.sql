@@ -1,0 +1,286 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               11.4.8-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.11.0.7065
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for employeedb
+CREATE DATABASE IF NOT EXISTS `employeedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+USE `employeedb`;
+
+-- Dumping structure for table employeedb.departments
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table employeedb.departments: ~4 rows (approximately)
+DELETE FROM `departments`;
+INSERT INTO `departments` (`id`, `name`) VALUES
+	(1, 'Công nghệ thông tin'),
+	(2, 'Nhân sự'),
+	(3, 'Kinh doanh'),
+	(4, 'Kế toán');
+
+-- Dumping structure for table employeedb.employees
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `salary` double DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  `position_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_employees_department` (`department_id`),
+  KEY `fk_employees_position` (`position_id`),
+  CONSTRAINT `fk_employees_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  CONSTRAINT `fk_employees_position` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table employeedb.employees: ~210 rows (approximately)
+DELETE FROM `employees`;
+INSERT INTO `employees` (`id`, `name`, `role`, `age`, `salary`, `department_id`, `position_id`) VALUES
+	(1, 'Nguyễn Hoàng Linh', 'Lập trình viên', 28, 22000000, 1, 1),
+	(2, 'Trần Phan Hòa Bình', 'Lập trình viên', 31, 26000000, 1, 2),
+	(3, 'Lê Minh Cường', 'Quản lý', 42, 45000000, 1, 3),
+	(4, 'Phạm Thu Dung', 'Tuyển dụng', 27, 15000000, 2, 1),
+	(5, 'Hoàng Văn Em', 'Quản lý', 39, 38000000, 2, 3),
+	(6, 'Vũ Thị Phương', 'Kinh doanh', 25, 14000000, 3, 4),
+	(7, 'Đặng Quốc Gia', 'Kinh doanh', 30, 20000000, 3, 1),
+	(8, 'Bùi Thanh Hà', 'Kinh doanh', 34, 28000000, 3, 2),
+	(9, 'Ngô Đức Huy', 'Lập trình viên', 23, 9000000, 1, 4),
+	(10, 'Phạm Hoàng Vinh', 'Lập trình viên', 23, 10000000, 1, 2),
+	(13, 'Nguyễn Đức Nga', 'Kiểm thử phần mềm', 37, 18000000, 1, 1),
+	(14, 'Nguyễn Đức An', 'DevOps', 38, 15500000, 1, 1),
+	(15, 'Hồ Kim Hiếu', 'Quản lý', 44, 42000000, 3, 3),
+	(16, 'Lê Thu Nhi', 'Quản lý nhóm', 30, 22000000, 4, 2),
+	(17, 'Dương Gia Thảo', 'Kế toán', 36, 19500000, 4, 1),
+	(18, 'Huỳnh Hoài Vy', 'Kế toán', 21, 8000000, 4, 4),
+	(19, 'Hoàng Văn Mai', 'Kế toán', 34, 23500000, 4, 1),
+	(20, 'Hoàng Kim Huy', 'Tuyển dụng', 24, 24000000, 2, 1),
+	(21, 'Phan Bảo Tú', 'Kiểm thử phần mềm', 26, 18500000, 1, 1),
+	(22, 'Trần Hữu Vy', 'Chăm sóc khách hàng', 21, 7000000, 3, 4),
+	(23, 'Trần Bảo Nga', 'Kinh doanh', 25, 16000000, 3, 1),
+	(24, 'Ngô Ngọc Bình', 'Chăm sóc khách hàng', 23, 8500000, 3, 4),
+	(25, 'Dương Đức Hải', 'Kinh doanh', 26, 22500000, 3, 1),
+	(26, 'Vũ Anh Bình', 'Lập trình viên', 24, 19000000, 1, 1),
+	(27, 'Huỳnh Minh An', 'Kế toán', 36, 20500000, 4, 1),
+	(28, 'Lý Ngọc Sơn', 'DevOps', 22, 8500000, 1, 4),
+	(29, 'Phạm Đức Nam', 'Phân tích nghiệp vụ', 21, 7000000, 1, 4),
+	(30, 'Võ Tuấn Yến', 'Kinh doanh', 36, 15000000, 3, 1),
+	(31, 'Huỳnh Kim Vy', 'Quản lý nhóm', 33, 29500000, 4, 2),
+	(32, 'Phạm Quốc Tâm', 'Quản lý nhóm', 31, 23500000, 3, 2),
+	(33, 'Đỗ Bảo Nga', 'Hành chính nhân sự', 29, 14500000, 2, 1),
+	(34, 'Nguyễn Thu Hùng', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(35, 'Hồ Gia Việt', 'Kinh doanh', 38, 25000000, 3, 1),
+	(36, 'Vũ Kim Thắng', 'Quản lý nhóm', 38, 29000000, 2, 2),
+	(37, 'Lê Hoài Dung', 'Chăm sóc khách hàng', 34, 20000000, 3, 1),
+	(38, 'Lê Quốc Quyên', 'Quản lý nhóm', 29, 23000000, 4, 2),
+	(39, 'Đặng Tuấn Vy', 'Kiểm thử phần mềm', 21, 5500000, 1, 4),
+	(40, 'Lý Anh Nga', 'Quản lý nhóm', 30, 23500000, 1, 2),
+	(41, 'Trần Thanh Dung', 'Chăm sóc khách hàng', 24, 5000000, 3, 4),
+	(42, 'Phạm Đức Nhi', 'Quản lý', 44, 44000000, 1, 3),
+	(43, 'Bùi Hoài Nga', 'Quản lý', 47, 55000000, 4, 3),
+	(44, 'Phạm Thu Tâm', 'Kinh doanh', 32, 16500000, 3, 1),
+	(45, 'Võ Ngọc Quyên', 'Tuyển dụng', 28, 21500000, 2, 1),
+	(46, 'Lý Văn Phong', 'Chăm sóc khách hàng', 25, 14000000, 3, 1),
+	(47, 'Dương Văn Thắng', 'Hành chính nhân sự', 30, 10000000, 2, 1),
+	(48, 'Đặng Ngọc Tú', 'Marketing', 24, 24000000, 3, 1),
+	(49, 'Ngô Quốc Hải', 'Quản lý nhóm', 35, 29500000, 1, 2),
+	(50, 'Trần Hữu Linh', 'Thủ quỹ', 29, 17500000, 4, 1),
+	(51, 'Trần Tuấn Vy', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(52, 'Võ Minh Vy', 'Kế toán', 24, 5000000, 4, 4),
+	(53, 'Phạm Thanh Linh', 'DevOps', 24, 21000000, 1, 1),
+	(54, 'Đỗ Thu Hiếu', 'Chăm sóc khách hàng', 24, 25000000, 3, 1),
+	(55, 'Lý Minh Huy', 'Phân tích nghiệp vụ', 31, 21000000, 1, 1),
+	(56, 'Hồ Kim Tú', 'Lập trình viên', 28, 15500000, 1, 1),
+	(57, 'Lý Hoài Phong', 'Thủ quỹ', 22, 6000000, 4, 4),
+	(58, 'Hoàng Hữu Nhi', 'Quản lý nhóm', 31, 22000000, 4, 2),
+	(59, 'Phạm Minh Trung', 'Kiểm toán nội bộ', 37, 11500000, 4, 1),
+	(60, 'Ngô Quốc Nga', 'Chăm sóc khách hàng', 31, 16000000, 3, 1),
+	(61, 'Lê Mai Phúc', 'Quản lý', 50, 56500000, 2, 3),
+	(62, 'Lý Ngọc Nhi', 'Quản lý nhóm', 36, 31500000, 4, 2),
+	(63, 'Nguyễn Đức Nga', 'Kiểm thử phần mềm', 37, 18000000, 1, 1),
+	(64, 'Nguyễn Đức An', 'DevOps', 38, 15500000, 1, 1),
+	(65, 'Hồ Kim Hiếu', 'Quản lý', 44, 42000000, 3, 3),
+	(66, 'Lê Thu Nhi', 'Quản lý nhóm', 30, 22000000, 4, 2),
+	(67, 'Dương Gia Thảo', 'Kế toán', 36, 19500000, 4, 1),
+	(68, 'Huỳnh Hoài Vy', 'Kế toán', 21, 8000000, 4, 4),
+	(69, 'Hoàng Văn Mai', 'Kế toán', 34, 23500000, 4, 1),
+	(70, 'Hoàng Kim Huy', 'Tuyển dụng', 24, 24000000, 2, 1),
+	(71, 'Phan Bảo Tú', 'Kiểm thử phần mềm', 26, 18500000, 1, 1),
+	(72, 'Trần Hữu Vy', 'Chăm sóc khách hàng', 21, 7000000, 3, 4),
+	(73, 'Trần Bảo Nga', 'Kinh doanh', 25, 16000000, 3, 1),
+	(74, 'Ngô Ngọc Bình', 'Chăm sóc khách hàng', 23, 8500000, 3, 4),
+	(75, 'Dương Đức Hải', 'Kinh doanh', 26, 22500000, 3, 1),
+	(76, 'Vũ Anh Bình', 'Lập trình viên', 24, 19000000, 1, 1),
+	(77, 'Huỳnh Minh An', 'Kế toán', 36, 20500000, 4, 1),
+	(78, 'Lý Ngọc Sơn', 'DevOps', 22, 8500000, 1, 4),
+	(79, 'Phạm Đức Nam', 'Phân tích nghiệp vụ', 21, 7000000, 1, 4),
+	(80, 'Võ Tuấn Yến', 'Kinh doanh', 36, 15000000, 3, 1),
+	(81, 'Huỳnh Kim Vy', 'Quản lý nhóm', 33, 29500000, 4, 2),
+	(82, 'Phạm Quốc Tâm', 'Quản lý nhóm', 31, 23500000, 3, 2),
+	(83, 'Đỗ Bảo Nga', 'Hành chính nhân sự', 29, 14500000, 2, 1),
+	(84, 'Nguyễn Thu Hùng', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(85, 'Hồ Gia Việt', 'Kinh doanh', 38, 25000000, 3, 1),
+	(86, 'Vũ Kim Thắng', 'Quản lý nhóm', 38, 29000000, 2, 2),
+	(87, 'Lê Hoài Dung', 'Chăm sóc khách hàng', 34, 20000000, 3, 1),
+	(88, 'Lê Quốc Quyên', 'Quản lý nhóm', 29, 23000000, 4, 2),
+	(89, 'Đặng Tuấn Vy', 'Kiểm thử phần mềm', 21, 5500000, 1, 4),
+	(90, 'Lý Anh Nga', 'Quản lý nhóm', 30, 23500000, 1, 2),
+	(91, 'Trần Thanh Dung', 'Chăm sóc khách hàng', 24, 5000000, 3, 4),
+	(92, 'Phạm Đức Nhi', 'Quản lý', 44, 44000000, 1, 3),
+	(93, 'Bùi Hoài Nga', 'Quản lý', 47, 55000000, 4, 3),
+	(94, 'Phạm Thu Tâm', 'Kinh doanh', 32, 16500000, 3, 1),
+	(95, 'Võ Ngọc Quyên', 'Tuyển dụng', 28, 21500000, 2, 1),
+	(96, 'Lý Văn Phong', 'Chăm sóc khách hàng', 25, 14000000, 3, 1),
+	(97, 'Dương Văn Thắng', 'Hành chính nhân sự', 30, 10000000, 2, 1),
+	(98, 'Đặng Ngọc Tú', 'Marketing', 24, 24000000, 3, 1),
+	(99, 'Ngô Quốc Hải', 'Quản lý nhóm', 35, 29500000, 1, 2),
+	(100, 'Trần Hữu Linh', 'Thủ quỹ', 29, 17500000, 4, 1),
+	(101, 'Trần Tuấn Vy', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(102, 'Võ Minh Vy', 'Kế toán', 24, 5000000, 4, 4),
+	(103, 'Phạm Thanh Linh', 'DevOps', 24, 21000000, 1, 1),
+	(104, 'Đỗ Thu Hiếu', 'Chăm sóc khách hàng', 24, 25000000, 3, 1),
+	(105, 'Lý Minh Huy', 'Phân tích nghiệp vụ', 31, 21000000, 1, 1),
+	(106, 'Hồ Kim Tú', 'Lập trình viên', 28, 15500000, 1, 1),
+	(107, 'Lý Hoài Phong', 'Thủ quỹ', 22, 6000000, 4, 4),
+	(108, 'Hoàng Hữu Nhi', 'Quản lý nhóm', 31, 22000000, 4, 2),
+	(109, 'Phạm Minh Trung', 'Kiểm toán nội bộ', 37, 11500000, 4, 1),
+	(110, 'Ngô Quốc Nga', 'Chăm sóc khách hàng', 31, 16000000, 3, 1),
+	(111, 'Lê Mai Phúc', 'Quản lý', 50, 56500000, 2, 3),
+	(112, 'Lý Ngọc Nhi', 'Quản lý nhóm', 36, 31500000, 4, 2),
+	(113, 'Nguyễn Đức Nga', 'Kiểm thử phần mềm', 37, 18000000, 1, 1),
+	(114, 'Nguyễn Đức An', 'DevOps', 38, 15500000, 1, 1),
+	(115, 'Hồ Kim Hiếu', 'Quản lý', 44, 42000000, 3, 3),
+	(116, 'Lê Thu Nhi', 'Quản lý nhóm', 30, 22000000, 4, 2),
+	(117, 'Dương Gia Thảo', 'Kế toán', 36, 19500000, 4, 1),
+	(118, 'Huỳnh Hoài Vy', 'Kế toán', 21, 8000000, 4, 4),
+	(119, 'Hoàng Văn Mai', 'Kế toán', 34, 23500000, 4, 1),
+	(120, 'Hoàng Kim Huy', 'Tuyển dụng', 24, 24000000, 2, 1),
+	(121, 'Phan Bảo Tú', 'Kiểm thử phần mềm', 26, 18500000, 1, 1),
+	(122, 'Trần Hữu Vy', 'Chăm sóc khách hàng', 21, 7000000, 3, 4),
+	(123, 'Trần Bảo Nga', 'Kinh doanh', 25, 16000000, 3, 1),
+	(124, 'Ngô Ngọc Bình', 'Chăm sóc khách hàng', 23, 8500000, 3, 4),
+	(125, 'Dương Đức Hải', 'Kinh doanh', 26, 22500000, 3, 1),
+	(126, 'Vũ Anh Bình', 'Lập trình viên', 24, 19000000, 1, 1),
+	(127, 'Huỳnh Minh An', 'Kế toán', 36, 20500000, 4, 1),
+	(128, 'Lý Ngọc Sơn', 'DevOps', 22, 8500000, 1, 4),
+	(129, 'Phạm Đức Nam', 'Phân tích nghiệp vụ', 21, 7000000, 1, 4),
+	(130, 'Võ Tuấn Yến', 'Kinh doanh', 36, 15000000, 3, 1),
+	(131, 'Huỳnh Kim Vy', 'Quản lý nhóm', 33, 29500000, 4, 2),
+	(132, 'Phạm Quốc Tâm', 'Quản lý nhóm', 31, 23500000, 3, 2),
+	(133, 'Đỗ Bảo Nga', 'Hành chính nhân sự', 29, 14500000, 2, 1),
+	(134, 'Nguyễn Thu Hùng', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(135, 'Hồ Gia Việt', 'Kinh doanh', 38, 25000000, 3, 1),
+	(136, 'Vũ Kim Thắng', 'Quản lý nhóm', 38, 29000000, 2, 2),
+	(137, 'Lê Hoài Dung', 'Chăm sóc khách hàng', 34, 20000000, 3, 1),
+	(138, 'Lê Quốc Quyên', 'Quản lý nhóm', 29, 23000000, 4, 2),
+	(139, 'Đặng Tuấn Vy', 'Kiểm thử phần mềm', 21, 5500000, 1, 4),
+	(140, 'Lý Anh Nga', 'Quản lý nhóm', 30, 23500000, 1, 2),
+	(141, 'Trần Thanh Dung', 'Chăm sóc khách hàng', 24, 5000000, 3, 4),
+	(142, 'Phạm Đức Nhi', 'Quản lý', 44, 44000000, 1, 3),
+	(143, 'Bùi Hoài Nga', 'Quản lý', 47, 55000000, 4, 3),
+	(144, 'Phạm Thu Tâm', 'Kinh doanh', 32, 16500000, 3, 1),
+	(145, 'Võ Ngọc Quyên', 'Tuyển dụng', 28, 21500000, 2, 1),
+	(146, 'Lý Văn Phong', 'Chăm sóc khách hàng', 25, 14000000, 3, 1),
+	(147, 'Dương Văn Thắng', 'Hành chính nhân sự', 30, 10000000, 2, 1),
+	(148, 'Đặng Ngọc Tú', 'Marketing', 24, 24000000, 3, 1),
+	(149, 'Ngô Quốc Hải', 'Quản lý nhóm', 35, 29500000, 1, 2),
+	(150, 'Trần Hữu Linh', 'Thủ quỹ', 29, 17500000, 4, 1),
+	(151, 'Trần Tuấn Vy', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(152, 'Võ Minh Vy', 'Kế toán', 24, 5000000, 4, 4),
+	(153, 'Phạm Thanh Linh', 'DevOps', 24, 21000000, 1, 1),
+	(154, 'Đỗ Thu Hiếu', 'Chăm sóc khách hàng', 24, 25000000, 3, 1),
+	(155, 'Lý Minh Huy', 'Phân tích nghiệp vụ', 31, 21000000, 1, 1),
+	(156, 'Hồ Kim Tú', 'Lập trình viên', 28, 15500000, 1, 1),
+	(157, 'Lý Hoài Phong', 'Thủ quỹ', 22, 6000000, 4, 4),
+	(158, 'Hoàng Hữu Nhi', 'Quản lý nhóm', 31, 22000000, 4, 2),
+	(159, 'Phạm Minh Trung', 'Kiểm toán nội bộ', 37, 11500000, 4, 1),
+	(160, 'Ngô Quốc Nga', 'Chăm sóc khách hàng', 31, 16000000, 3, 1),
+	(161, 'Lê Mai Phúc', 'Quản lý', 50, 56500000, 2, 3),
+	(162, 'Lý Ngọc Nhi', 'Quản lý nhóm', 36, 31500000, 4, 2),
+	(163, 'Nguyễn Đức Nga', 'Kiểm thử phần mềm', 37, 18000000, 1, 1),
+	(164, 'Nguyễn Đức An', 'DevOps', 38, 15500000, 1, 1),
+	(165, 'Hồ Kim Hiếu', 'Quản lý', 44, 42000000, 3, 3),
+	(166, 'Lê Thu Nhi', 'Quản lý nhóm', 30, 22000000, 4, 2),
+	(167, 'Dương Gia Thảo', 'Kế toán', 36, 19500000, 4, 1),
+	(168, 'Huỳnh Hoài Vy', 'Kế toán', 21, 8000000, 4, 4),
+	(169, 'Hoàng Văn Mai', 'Kế toán', 34, 23500000, 4, 1),
+	(170, 'Hoàng Kim Huy', 'Tuyển dụng', 24, 24000000, 2, 1),
+	(171, 'Phan Bảo Tú', 'Kiểm thử phần mềm', 26, 18500000, 1, 1),
+	(172, 'Trần Hữu Vy', 'Chăm sóc khách hàng', 21, 7000000, 3, 4),
+	(173, 'Trần Bảo Nga', 'Kinh doanh', 25, 16000000, 3, 1),
+	(174, 'Ngô Ngọc Bình', 'Chăm sóc khách hàng', 23, 8500000, 3, 4),
+	(175, 'Dương Đức Hải', 'Kinh doanh', 26, 22500000, 3, 1),
+	(176, 'Vũ Anh Bình', 'Lập trình viên', 24, 19000000, 1, 1),
+	(177, 'Huỳnh Minh An', 'Kế toán', 36, 20500000, 4, 1),
+	(178, 'Lý Ngọc Sơn', 'DevOps', 22, 8500000, 1, 4),
+	(179, 'Phạm Đức Nam', 'Phân tích nghiệp vụ', 21, 7000000, 1, 4),
+	(180, 'Võ Tuấn Yến', 'Kinh doanh', 36, 15000000, 3, 1),
+	(181, 'Huỳnh Kim Vy', 'Quản lý nhóm', 33, 29500000, 4, 2),
+	(182, 'Phạm Quốc Tâm', 'Quản lý nhóm', 31, 23500000, 3, 2),
+	(183, 'Đỗ Bảo Nga', 'Hành chính nhân sự', 29, 14500000, 2, 1),
+	(184, 'Nguyễn Thu Hùng', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(185, 'Hồ Gia Việt', 'Kinh doanh', 38, 25000000, 3, 1),
+	(186, 'Vũ Kim Thắng', 'Quản lý nhóm', 38, 29000000, 2, 2),
+	(187, 'Lê Hoài Dung', 'Chăm sóc khách hàng', 34, 20000000, 3, 1),
+	(188, 'Lê Quốc Quyên', 'Quản lý nhóm', 29, 23000000, 4, 2),
+	(189, 'Đặng Tuấn Vy', 'Kiểm thử phần mềm', 21, 5500000, 1, 4),
+	(190, 'Lý Anh Nga', 'Quản lý nhóm', 30, 23500000, 1, 2),
+	(191, 'Trần Thanh Dung', 'Chăm sóc khách hàng', 24, 5000000, 3, 4),
+	(192, 'Phạm Đức Nhi', 'Quản lý', 44, 44000000, 1, 3),
+	(193, 'Bùi Hoài Nga', 'Quản lý', 47, 55000000, 4, 3),
+	(194, 'Phạm Thu Tâm', 'Kinh doanh', 32, 16500000, 3, 1),
+	(195, 'Võ Ngọc Quyên', 'Tuyển dụng', 28, 21500000, 2, 1),
+	(196, 'Lý Văn Phong', 'Chăm sóc khách hàng', 25, 14000000, 3, 1),
+	(197, 'Dương Văn Thắng', 'Hành chính nhân sự', 30, 10000000, 2, 1),
+	(198, 'Đặng Ngọc Tú', 'Marketing', 24, 24000000, 3, 1),
+	(199, 'Ngô Quốc Hải', 'Quản lý nhóm', 35, 29500000, 1, 2),
+	(200, 'Trần Hữu Linh', 'Thủ quỹ', 29, 17500000, 4, 1),
+	(201, 'Trần Tuấn Vy', 'Thủ quỹ', 28, 25000000, 4, 1),
+	(202, 'Võ Minh Vy', 'Kế toán', 24, 5000000, 4, 4),
+	(203, 'Phạm Thanh Linh', 'DevOps', 24, 21000000, 1, 1),
+	(204, 'Đỗ Thu Hiếu', 'Chăm sóc khách hàng', 24, 25000000, 3, 1),
+	(205, 'Lý Minh Huy', 'Phân tích nghiệp vụ', 31, 21000000, 1, 1),
+	(206, 'Hồ Kim Tú', 'Lập trình viên', 28, 15500000, 1, 1),
+	(207, 'Lý Hoài Phong', 'Thủ quỹ', 22, 6000000, 4, 4),
+	(208, 'Hoàng Hữu Nhi', 'Quản lý nhóm', 31, 22000000, 4, 2),
+	(209, 'Phạm Minh Trung', 'Kiểm toán nội bộ', 37, 11500000, 4, 1),
+	(210, 'Ngô Quốc Nga', 'Chăm sóc khách hàng', 31, 16000000, 3, 1),
+	(211, 'Lê Mai Phúc', 'Quản lý', 50, 56500000, 2, 3),
+	(212, 'Lý Ngọc Nhi', 'Quản lý nhóm', 36, 31500000, 4, 2);
+
+-- Dumping structure for table employeedb.positions
+CREATE TABLE IF NOT EXISTS `positions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table employeedb.positions: ~4 rows (approximately)
+DELETE FROM `positions`;
+INSERT INTO `positions` (`id`, `title`) VALUES
+	(1, 'Nhân viên'),
+	(2, 'Trưởng nhóm'),
+	(3, 'Trưởng phòng'),
+	(4, 'Thực tập sinh');
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
