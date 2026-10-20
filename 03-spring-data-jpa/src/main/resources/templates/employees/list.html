@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/layout :: head('Danh sách nhân viên')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
@@ -9,7 +10,8 @@
         <h3 class="mb-0">Danh sách nhân viên
             <span class="badge bg-primary" th:text="${#lists.size(employees)}">0</span>
         </h3>
-        <a class="btn btn-success" th:href="@{/employees/new}">+ Thêm nhân viên</a>
+        <a class="btn btn-success" th:href="@{/employees/new}"
+           sec:authorize="hasAnyRole('USER','ADMIN')">+ Thêm nhân viên</a>
     </div>
 
     <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>

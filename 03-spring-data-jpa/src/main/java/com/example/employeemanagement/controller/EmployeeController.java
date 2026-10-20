@@ -7,6 +7,8 @@ import com.example.employeemanagement.entity.Employee;
 import com.example.employeemanagement.entity.Position;
 import com.example.employeemanagement.service.EmployeeService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,7 +47,12 @@ public class EmployeeController {
 
     // ----- Tìm kiếm theo id, name, age, salary, position -----
     @GetMapping("/search")
-    public String search(@ModelAttribute("criteria") EmployeeSearchCriteria criteria, Model model) {
+    public String search(@ModelAttribute("criteria") EmployeeSearchCriteria criteria,
+                         Authentication authentication, Model model) {
+        // Lương là dữ liệu nhạy cảm: GUEST không được tìm theo salary (USER, ADMIN thì được)
+        if (criteria.getMinSalary() != null && !canSearchBySalary(authentication)) {
+            throw new AccessDeniedException("Chỉ USER hoặc ADMIN mới được tìm theo lương");
+        }
         if (criteria.hasAny()) {
             model.addAttribute("employees", employeeService.search(criteria));
         }
@@ -103,5 +110,10 @@ public class EmployeeController {
         employeeService.delete(id);
         redirect.addFlashAttribute("message", "Đã xóa nhân viên có ID " + id + ".");
         return "redirect:/employees";
+    }
+
+    private boolean canSearchBySalary(Authentication authentication) {
+        return authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER") || a.getAuthority().equals("ROLE_ADMIN"));
     }
 }

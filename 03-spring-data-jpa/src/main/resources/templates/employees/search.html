@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/layout :: head('Tìm kiếm nhân viên')}"></head>
 <body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
@@ -25,7 +26,7 @@
             <label class="form-label">Tuổi đến</label>
             <input type="number" class="form-control" th:field="*{maxAge}">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" sec:authorize="hasAnyRole('USER','ADMIN')">
             <label class="form-label">Lương lớn hơn (VND)</label>
             <input type="number" class="form-control" th:field="*{minSalary}">
         </div>

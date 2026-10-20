@@ -46,7 +46,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<Employee> topPaidInDepartment(Integer departmentId, int n) {
-        return employeeRepository.findByDepartment_IdOrderBySalary_Id(departmentId, PageRequest.of(0, n));
+        return employeeRepository.findByDepartment_IdOrderBySalaryAsc(departmentId, PageRequest.of(0, n));
     }
 
     @Override

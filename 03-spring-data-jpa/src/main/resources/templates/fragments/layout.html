@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +17,8 @@
         </a>
         <div class="d-flex flex-wrap gap-3">
             <a class="text-white text-decoration-none" th:href="@{/employees}">Danh sách</a>
-            <a class="text-white text-decoration-none" th:href="@{/employees/new}">Thêm mới</a>
+            <a class="text-white text-decoration-none" th:href="@{/employees/new}"
+               sec:authorize="hasAnyRole('USER','ADMIN')">Thêm mới</a>
             <a class="text-white text-decoration-none" th:href="@{/employees/search}">Tìm kiếm</a>
             <span class="text-secondary">|</span>
             <a class="text-white text-decoration-none" th:href="@{/reports/by-position}">Theo chức vụ</a>
@@ -25,6 +27,15 @@
             <a class="text-white text-decoration-none" th:href="@{/reports/department-salary}">Lương theo phòng</a>
             <a class="text-white text-decoration-none" th:href="@{/reports/top-paid}">Top lương</a>
             <a class="text-white text-decoration-none" th:href="@{/reports/empty-departments}">Phòng chưa có NV</a>
+        </div>
+        <div class="d-flex align-items-center gap-2 text-white" sec:authorize="isAuthenticated()">
+            <span>Xin chào, <strong sec:authentication="name">user</strong></span>
+            <span class="badge bg-info text-dark" sec:authorize="hasRole('ADMIN')">ADMIN</span>
+            <span class="badge bg-info text-dark" sec:authorize="hasRole('USER')">USER</span>
+            <span class="badge bg-info text-dark" sec:authorize="hasRole('GUEST')">GUEST</span>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-light">Đăng xuất</button>
+            </form>
         </div>
     </div>
 </nav>
@@ -54,8 +65,10 @@
             <td th:text="${e.positionTitle}">Chức vụ</td>
             <td class="text-end text-nowrap">
                 <a class="btn btn-sm btn-outline-secondary" th:href="@{/employees/{id}(id=${e.id})}">Xem</a>
-                <a class="btn btn-sm btn-outline-primary" th:href="@{/employees/{id}/edit(id=${e.id})}">Sửa</a>
+                <a class="btn btn-sm btn-outline-primary" th:href="@{/employees/{id}/edit(id=${e.id})}"
+                   sec:authorize="hasAnyRole('USER','ADMIN')">Sửa</a>
                 <form class="d-inline" method="post" th:action="@{/employees/{id}/delete(id=${e.id})}"
+                      sec:authorize="hasRole('ADMIN')"
                       onsubmit="return confirm('Bạn có chắc muốn xóa nhân viên này?');">
                     <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
                 </form>

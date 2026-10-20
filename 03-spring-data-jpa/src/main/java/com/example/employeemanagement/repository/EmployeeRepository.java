@@ -27,7 +27,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     List<Employee> findByDepartment_IdAndPosition_Id(Integer departmentId, Integer positionId);
 
     // Top N: truyền PageRequest.of(0, n)
-    List<Employee> findByDepartment_IdOrderBySalary_Id(Integer departmentId, Pageable pageable);
+    List<Employee> findByDepartment_IdOrderBySalaryAsc(Integer departmentId, Pageable pageable);
 
     // ----- Thống kê (JPQL + DTO) -----
     @Query("""
